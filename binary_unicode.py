@@ -58,3 +58,21 @@ encoded_message = chuck_norris_encode(message)
 
 # Display the encoded message
 print("Encoded message:", encoded_message)
+
+def encode_message(message):
+    encoded_message = ''
+    for char in message:
+        binary_char = format(ord(char), '07b')  # Convert character to 7-bit ASCII binary
+        encoded_block = ''
+        for bit in binary_char:
+            if not encoded_block or encoded_block[-1] != bit:
+                if encoded_block:
+                    encoded_message += ' '  # Separate blocks with space
+                encoded_message += '0' if bit == '1' else '00'  # Determine first block
+            encoded_message += '0'  # Second block
+        encoded_message += ' '  # Separate characters with space
+    return encoded_message.strip()
+
+
+message = input("Enter the message: ")
+print("Encoded message:", encode_message(message))
