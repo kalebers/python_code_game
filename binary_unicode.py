@@ -50,9 +50,11 @@ def chuck_norris_encode(message):
         
     return encoded_message
 
-# Test cases
-test_cases = ["C", "CC", "%", "Chuck Norris' keyboard has 2 keys: 0 and white space"]
-for test_case in test_cases:
-    print("input:", test_case)
-    print("output:", chuck_norris_encode(test_case))
-    print()
+# Take input from user
+message = input("Enter the message: ")
+
+# Encode the message using Chuck Norris' method
+encoded_message = chuck_norris_encode(message)
+
+# Display the encoded message
+print("Encoded message:", encoded_message)
