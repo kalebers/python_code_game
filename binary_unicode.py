@@ -21,12 +21,38 @@ Several tests show this code is proper:
 
 
 
-def encode_binary(message):
-    binary_message = ''.join(format(ord(char), 'b') for char in message) # Convert each character to its binary representation
-    encoded_message = binary_message.replace('1', '0') # Replace all '1's with '0's
+def chuck_norris_encode(message):
+    encoded_message = ""
+    for char in message:
+        # Convert the character to its ASCII representation
+        ascii_value = ord(char)
+        
+        # Convert the ASCII value to binary representation
+        binary_value = bin(ascii_value)[2:].zfill(7)
+        
+        # Apply Chuck Norris' encoding principle
+        encoded_block = ""
+        prev_bit = None
+        for bit in binary_value:
+            if bit != prev_bit:
+                if encoded_block:
+                    encoded_message += " "
+                if bit == "0":
+                    encoded_message += "00 0"
+                else:
+                    encoded_message += "0 0"
+                encoded_block = "0"
+            else:
+                encoded_block += "0"
+            prev_bit = bit
+        
+        encoded_message += " " + encoded_block
+        
     return encoded_message
 
-# Test the function
-message = input("Enter the message to encode: ")
-encoded_message = encode_binary(message)
-print("Encoded message:", encoded_message)
+# Test cases
+test_cases = ["C", "CC", "%", "Chuck Norris' keyboard has 2 keys: 0 and white space"]
+for test_case in test_cases:
+    print("input:", test_case)
+    print("output:", chuck_norris_encode(test_case))
+    print()
