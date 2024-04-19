@@ -133,3 +133,6 @@ for char in message:
 
 # Print the encoded message
 print(encoded_message)
+
+outout 0  00 0 0 0000 0 00
+expected 0 0 00 0000 0 00
