@@ -132,7 +132,7 @@ for char in message:
         encoded_message += " " + "0" * zero_count  # Add the count of consecutive 0s
 
 # Print the encoded message
-print(encoded_message)
+print(encoded_message.strip())  # Strip leading and trailing whitespaces
 
 outout 0  00 0 0 0000 0 00
 expected 0 0 00 0000 0 00
