@@ -73,66 +73,50 @@ def encode_message(message):
         encoded_message += ' '  # Separate characters with space
     return encoded_message.strip()
 
-
-message = input("Enter the message: ")
-print("Encoded message:", encode_message(message))
-
-
-
-
-
-
-
-
-
-# Take the input message from the user
+# Take user input
 message = input()
 
-# Initialize an empty string to store the encoded output
+# Initialize an empty string to store the encoded message
 encoded_message = ""
 
 # Iterate through each character in the input message
 for char in message:
-    # Convert the character to its ASCII value
-    ascii_value = ord(char)
+    # Convert the ASCII value of the character to binary
+    binary_char = bin(ord(char))[2:].zfill(7)
     
-    # Convert the ASCII value to its binary representation
-    binary_value = bin(ascii_value)[2:]
-    
-    # Pad the binary value with leading zeros to ensure it's 7 bits long
-    binary_value = binary_value.zfill(7)
-    
-    # Initialize variables to track the current block and count of consecutive 0s
+    # Initialize variables to store the current block and its count
     current_block = ""
-    zero_count = 0
+    block_count = 0
     
-    # Iterate through each bit in the binary value
-    for bit in binary_value:
-        # If the bit is different from the current block, add the current block and zero count to the encoded message
-        if bit != current_block:
-            if current_block:  # Check if the current block is not empty
-                encoded_message += " "  # Add a space between blocks
-            if bit == "0":
-                encoded_message += "00"  # If the bit is 0, add 00 to indicate the next series contains 1s
+    # Iterate through each bit in the binary representation of the character
+    for bit in binary_char:
+        # If the bit is the same as the current block, add it to the current block
+        if bit == current_block:
+            block_count += 1
+        # If the bit is different from the current block, add the current block and its count to the encoded message
+        else:
+            # If the current block is '1', add '0' to the encoded message
+            if current_block == '1':
+                encoded_message += '0 '
+            # If the current block is '0', add '00' to the encoded message
             else:
-                encoded_message += "0"  # If the bit is 1, add 0 to indicate the next series contains 0s
-            encoded_message += " " + "0" * zero_count  # Add the count of consecutive 0s
-            current_block = bit  # Update the current block
-            zero_count = 1  # Reset the zero count to 1
-        else:
-            zero_count += 1  # Increment the zero count if the bit is the same as the current block
+                encoded_message += '0 '
+            # Add the number of '0's equal to the block count to the encoded message
+            encoded_message += '0' * block_count + ' '
+            
+            # Update the current block and reset the block count
+            current_block = bit
+            block_count = 1
     
-    # Add the last block and count of consecutive 0s to the encoded message after the loop ends
-    if current_block:
-        encoded_message += " "  # Add a space between blocks
-        if current_block == "0":
-            encoded_message += "00"  # If the last block is 0, add 00 to indicate the last series contains 1s
-        else:
-            encoded_message += "0"  # If the last block is 1, add 0 to indicate the last series contains 0s
-        encoded_message += " " + "0" * zero_count  # Add the count of consecutive 0s
+    # Add the last block and its count to the encoded message
+    if current_block == '1':
+        encoded_message += '0 '
+    else:
+        encoded_message += '0 '
+    encoded_message += '0' * block_count + ' '
 
 # Print the encoded message
-print(encoded_message.strip())  # Strip leading and trailing whitespaces
+print(encoded_message.strip())
 
 outout 0  00 0 0 0000 0 00
 expected 0 0 00 0000 0 00
